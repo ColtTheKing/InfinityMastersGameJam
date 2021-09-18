@@ -6,18 +6,20 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2d;
     public Transform groundCheck;
-    public LayerMask groundMask;
 
-    public float jump;
+
     private bool isGrounded;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
 
-    void Start()
+    void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
+
         if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
             isGrounded = true;
@@ -26,18 +28,29 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
             rb2d.velocity = new Vector2(2, 0);
         }
-        else if (Input.GetKey("a"))
+        else if (Input.GetKey(KeyCode.A))
         {
             rb2d.velocity = new Vector2(-2, 0);
         }
 
-        if (Input.GetKeyDown("space") && isGrounded)
+        //if (Input.GetKey(KeyCode.Space) && isGrounded == true)
+        //{
+        //rb2d.velocity = new Vector2(rb2d.velocity.x, jump);
+        //isGrounded = false;
+        //}
+
+        if (rb2d.velocity.y < 0)
         {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jump);
+            rb2d.velocity += Vector2.up * Physics2D.gravity.x * (fallMultiplier - 1) * Time.deltaTime;
         }
+        else if (rb2d.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && isGrounded == true)
+        {
+            rb2d.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+
     }
 }
