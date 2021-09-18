@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
 
     public float jump;
-    public float groundDistance = 0.4f;
     private bool isGrounded;
 
     private WeaponController weaponController;
@@ -22,7 +21,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
 
         //KEY HANDLING
         if (Input.GetKey("d"))
