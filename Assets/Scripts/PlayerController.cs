@@ -11,21 +11,17 @@ public class PlayerController : MonoBehaviour
     public float jump;
     private bool isGrounded;
 
-    private WeaponController weaponController;
+    //private WeaponController weaponController;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        weaponController = GetComponent<WeaponController>();
+        //weaponController = GetComponent<WeaponController>();
     }
 
     void FixedUpdate()
     {
-<<<<<<< HEAD
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
         //KEY HANDLING
-=======
         if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
             isGrounded = true;
@@ -34,7 +30,6 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
->>>>>>> 02ef720a9afe22f9b5570f525d370d8bd07e816c
         if (Input.GetKey("d"))
         {
             rb2d.velocity = new Vector2(2, 0);
