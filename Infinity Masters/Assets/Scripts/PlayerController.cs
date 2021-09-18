@@ -12,15 +12,19 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 0.4f;
     private bool isGrounded;
 
+    private WeaponController weaponController;
+
     void Start()
     {
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
+        weaponController = GetComponent<WeaponController>();
     }
 
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        //KEY HANDLING
         if (Input.GetKey("d"))
         {
             rb2d.velocity = new Vector2(2, 0);
