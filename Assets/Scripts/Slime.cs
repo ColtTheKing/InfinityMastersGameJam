@@ -5,16 +5,15 @@ using UnityEngine;
 public class Slime : Enemies
 {
     private Animator animator;
+    private Rigidbody2D rgb2D;
+    private Transform slimeTransform;
+    public float slimeMoveSpeed;
+
+
 
     public override void Awake()
     {
         base.Awake();
-
-        //SECONDS_FOR_ENEMY_UPDATE = 3;
-        //attackDamage = 4;
-        //moveSpeed = 1;
-        //attackRadius = 0.5f;
-        //maxHealth = 8;
     }
 
     // Use this for initialization
@@ -23,11 +22,36 @@ public class Slime : Enemies
         base.Start();
 
         animator = GetComponent<Animator>();
+        rgb2D = GetComponent<Rigidbody2D>();
+        slimeTransform = GetComponent<Transform>();
     }
 
     // Update is called once per frame
     public override void Update()
     {
+        Vector3 playerDirection = playerTransform.transform.position - slimeTransform.transform.position;
+
+        if (playerDirection.x < 0)
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x = 1;
+            transform.localScale = theScale;
+
+            rgb2D.AddForce(Vector2.left * slimeMoveSpeed, ForceMode2D.Impulse);
+            rgb2D.AddForce(Vector2.up * slimeMoveSpeed, ForceMode2D.Impulse);
+            animator.SetTrigger("jump");
+        }
+        else if (playerDirection.x > 0)
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x = -1;
+            transform.localScale = theScale;
+
+            rgb2D.AddForce(Vector2.right * slimeMoveSpeed, ForceMode2D.Impulse);
+            rgb2D.AddForce(Vector2.up * slimeMoveSpeed, ForceMode2D.Impulse);
+            animator.SetTrigger("jump");
+        }
+
         base.Update();
     }
 

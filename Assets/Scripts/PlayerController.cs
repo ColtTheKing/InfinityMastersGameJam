@@ -13,11 +13,10 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool left;
     [HideInInspector] public bool right;
-    [HideInInspector] public bool isGrounded;
+    public bool isGrounded;
     public float fallMultipler = 2.5f;
     public float lowJumpMultiplier = 2f;
     public float speed;
-    public float maxBugFloat;
 
     private WeaponController weaponController;
     private Animator animator;
