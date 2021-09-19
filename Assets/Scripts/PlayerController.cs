@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             right = true;
-            playerSprite.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             left = true;
-            playerSprite.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
