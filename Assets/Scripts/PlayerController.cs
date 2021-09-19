@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2d;
     public Transform groundCheck;
+    public Transform groundCheck2;
     public LayerMask groundMask;
     private Vector2 rightVector2;
     private Vector2 leftVector2;
@@ -33,6 +34,19 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Physics2D.Linecast(transform.position, groundCheck2.position, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            //If the player just landed, tell the animator to leave the jump animation
+            if (!isGrounded)
+                animator.SetTrigger("land");
+
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
         if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
             //If the player just landed, tell the animator to leave the jump animation
@@ -45,9 +59,8 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-        Debug.DrawLine(transform.position, groundCheck.position);
 
-        if(right == true)
+        if (right == true)
         {
 
             animator.SetBool("isWalking", true);
