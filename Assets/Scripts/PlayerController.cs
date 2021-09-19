@@ -18,11 +18,15 @@ public class PlayerController : MonoBehaviour
     public float lowJumpMultiplier = 2f;
     public float speed;
 
-    
+    private WeaponController weaponController;
+    private Animator animator;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        weaponController = GetComponent<WeaponController>();
+        animator = GetComponent<Animator>();
+
         rightVector2.Set(4, 0);
         leftVector2.Set(-4, 0);
     }
@@ -40,6 +44,10 @@ public class PlayerController : MonoBehaviour
 
         if (right == true)
         {
+            rb2d.velocity = new Vector2(2, 0);
+
+            animator.SetBool("isWalking", true);
+
             rb2d.velocity = rightVector2.normalized * speed;
             rightVector2.y = -1.5f;
             rb2d.velocity = rightVector2;
@@ -50,6 +58,11 @@ public class PlayerController : MonoBehaviour
             rb2d.velocity = leftVector2.normalized * speed;
             leftVector2.y = -1.5f;
             rb2d.velocity = leftVector2;
+        }
+        
+        if (!left && !right)
+        {
+            animator.SetBool("isWalking", false);
         }
         
         if(rb2d.velocity.y < 0)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da29b23492c66174ebea3f9143551e10, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: a8a4dc04ed5c1614c9e4b728c845b30f, type: 3}
+  sprite: {fileID: 0}
   damage: 2
   cooldown: 1
