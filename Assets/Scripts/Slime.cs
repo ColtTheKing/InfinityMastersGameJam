@@ -1,36 +1,57 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts
+public class Slime : Enemies
 {
-    public class Slime : Enemies
+    private Animator animator;
+
+    public override void Awake()
     {
-        public override void AttackPlayer()
+        base.Awake();
+
+        //SECONDS_FOR_ENEMY_UPDATE = 3;
+        //attackDamage = 4;
+        //moveSpeed = 1;
+        //attackRadius = 0.5f;
+        //maxHealth = 8;
+    }
+
+    // Use this for initialization
+    public override void Start()
+    {
+        base.Start();
+
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void AttackPlayer()
+    {
+        if (isPlayerToLeft())
         {
-            // if (distancetoplayer<=0) and las
-            // deal this.attackDamage to player
-            //
+            //give slime horiz and verti mobility of 45 degrees to the left
+
+            //call slimeAttack anim
+            animator.SetTrigger("jump");
         }
 
-        public override void MoveEnemy()
+        if (isPlayerToRight())
         {
-            
-        }
+            //give slime horiz and verti mobility of 45 degrees to the right
 
-        // Use this for initialization
-        void Start()
-        {
-            this.SECONDS_FOR_ENEMY_UPDATE = 3;
-            this.attackDamage = 4;
-            this.moveSpeed = 1;
-            this.attackRadius = 0.5f;
-            this.healthPoints = 8;
+            //call slimeAttack anim
+            animator.SetTrigger("jump");
         }
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+    public override void MoveEnemy()
+    {
+        //do nothing - attack player handles movement and damage is dealt on contact
     }
 }

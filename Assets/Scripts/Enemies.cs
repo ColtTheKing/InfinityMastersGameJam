@@ -2,25 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Enemies
-    : MonoBehaviour
+abstract public class Enemies : MonoBehaviour
 {
-    public float timer;
     public int moveSpeed;
     public int attackDamage;
-    public int healthPoints;
+    public int maxHealth;
     public float attackRadius;
     public int SECONDS_FOR_ENEMY_UPDATE;
+    public Transform playerTransform;
 
-    // Start is called before the first frame update
-    void Start()
+    private float timer;
+
+    private int currentHealth;
+
+    public virtual void Awake()
     {
-
+        
     }
 
+    // Start is called before the first frame update
+    public virtual void Start()
+    {
+        currentHealth = maxHealth;
+    }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         timer = timer + 0.01f;
         if (timer >= SECONDS_FOR_ENEMY_UPDATE)
@@ -33,21 +40,51 @@ abstract public class Enemies
         }
     }
 
+    public float getXDistanceToPlayer()
+    {
+        //Negative is to the left, positive is to the right
+        return playerTransform.position.x - transform.position.x;
+    }
+
+    public bool isPlayerToRight()
+    {
+        if (getXDistanceToPlayer() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool isPlayerToLeft()
+    {
+        if (0 >= getXDistanceToPlayer())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     abstract public void MoveEnemy();
 
     abstract public void AttackPlayer();
- 
 
-    void TakeDamage(int dmg) //call this after player hits enemy
+
+    public void TakeDamage(int dmg) //call this after player hits enemy
     {
-        if ((this.healthPoints - dmg) > 0)
+        if ((currentHealth - dmg) > 0)
         {
-            this.healthPoints = this.healthPoints - dmg;
+            currentHealth -= dmg;
             //TODO play some sort of sound or anim to signify damage taken
         }
         else
         {
-            this.Die();
+            Die();
         }
     }
 
@@ -55,6 +92,7 @@ abstract public class Enemies
     void Die() //enemy dies
     {
         //delete enemy, play sound
+        Destroy(gameObject);
     }
 
     public void setMoveSpeed(int speed)
@@ -69,7 +107,7 @@ abstract public class Enemies
 
     public void setHealthPoints(int lp)
     {
-        healthPoints = lp;
+        currentHealth = lp;
     }
 
     public int getMoveSpeed()
@@ -84,6 +122,16 @@ abstract public class Enemies
 
     public int getHealthPoints()
     {
-        return healthPoints;
+        return currentHealth;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerController playerHit = collision.otherCollider.gameObject.GetComponent<PlayerController>();
+
+        if (playerHit)
+        {
+            //deal damage to player
+        }
     }
 }

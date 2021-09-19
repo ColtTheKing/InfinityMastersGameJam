@@ -20,14 +20,12 @@ public class PlayerController : MonoBehaviour
 
     private WeaponController weaponController;
     private Animator animator;
-    private SpriteRenderer playerSprite;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         weaponController = GetComponent<WeaponController>();
         animator = GetComponent<Animator>();
-        playerSprite = GetComponent<SpriteRenderer>();
 
         rightVector2.Set(4, 0);
         leftVector2.Set(-4, 0);
@@ -37,6 +35,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
+            //If the player just landed, tell the animator to leave the jump animation
+            if (!isGrounded)
+                animator.SetTrigger("land");
+
             isGrounded = true;
         }
         else
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             right = true;
-            playerSprite.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
@@ -99,7 +101,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             left = true;
-            playerSprite.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
@@ -108,8 +110,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            weaponController.WeaponAttack();
-            animator.SetTrigger("attack");
+            weaponController.WeaponAttack(true, animator);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            weaponController.WeaponAttack(false, animator);
         }
     }
 }

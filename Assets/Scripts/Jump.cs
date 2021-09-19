@@ -10,7 +10,12 @@ public class Jump : MonoBehaviour
     bool jumpRequest;
 
     public PlayerController playerController;
+    private Animator animator;
 
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -25,6 +30,8 @@ public class Jump : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
             jumpRequest = false;
+
+            animator.SetTrigger("jump");
         }
     }
 }
