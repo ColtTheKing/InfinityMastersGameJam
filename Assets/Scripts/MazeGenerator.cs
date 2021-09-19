@@ -10,11 +10,14 @@ public class MazeGenerator : MonoBehaviour
         public bool top, right, bottom, left;
         public int numEntrances;
         public bool visited;
+        public bool bossRoom;
     }
 
     public Vector2 roomDimensions;
     public Vector2Int gridDimensions;
     public List<Room> roomTypes;
+    public Room bossRoom;
+    public Room defaultRoom;
 
     private MazeRoom[,] rooms;
 
@@ -22,6 +25,7 @@ public class MazeGenerator : MonoBehaviour
     void Start()
     {
         rooms = new MazeRoom[gridDimensions.x, gridDimensions.y];
+        generateRandomMaze();
     }
 
     // Update is called once per frame
@@ -30,20 +34,15 @@ public class MazeGenerator : MonoBehaviour
         
     }
 
-    private void GenBaseMaze()
-    {
-
-    }
-
     /**
      * Generates a random maze by filling the entire grid with walls and then
      * calling clearPath from the entry point.
      */
-    public void generateRandomMaze()
+    private void generateRandomMaze()
     {
-        for (int i = 0; i < roomDimensions.x; i++)
+        for (int i = 0; i < gridDimensions.x; i++)
         {
-            for (int j = 0; j < roomDimensions.y; j++)
+            for (int j = 0; j < gridDimensions.y; j++)
             {
                 rooms[i, j].top = false;
                 rooms[i, j].right = false;
@@ -51,19 +50,19 @@ public class MazeGenerator : MonoBehaviour
                 rooms[i, j].left = false;
                 rooms[i, j].numEntrances = 0;
                 rooms[i, j].visited = false;
+                rooms[i, j].bossRoom = false;
             }
         }
 
         clearPath(0, 1);
 
-        //I don't know why this was necessary
-        //for (int i = 0; i < roomDimensions.x; i++)
-        //{
-        //    for (int j = 0; j < roomDimensions.y; j++)
-        //    {
-        //        rooms[i, j].numEntrances = 0;
-        //    }
-        //}
+        for (int i = 0; i < gridDimensions.x; i++)
+        {
+            for (int j = 0; j < gridDimensions.y; j++)
+            {
+                GenRoomInMaze(i, j);
+            }
+        }
     }
 
     /**
@@ -77,7 +76,7 @@ public class MazeGenerator : MonoBehaviour
         int randDir, temp;
         int max = 5;
 
-        if (column < 0 || column >= roomDimensions.x || row < 0 || row >= roomDimensions.y ||
+        if (column < 0 || column >= gridDimensions.x || row < 0 || row >= gridDimensions.y ||
                 rooms[column, row].numEntrances > 1 || rooms[column, row].visited)
             return;
 
@@ -93,18 +92,24 @@ public class MazeGenerator : MonoBehaviour
             rooms[column, row - 1].numEntrances++;
             rooms[column, row - 1].top = true;
         }
-        if (column < roomDimensions.x - 1)
+        if (column < gridDimensions.x - 1)
         {
             rooms[column + 1, row].numEntrances++;
             rooms[column + 1, row].right = true;
         }
-        if (row < roomDimensions.y - 1)
+        if (row < gridDimensions.y - 1)
         {
             rooms[column, row + 1].numEntrances++;
             rooms[column, row + 1].bottom = true;
         }
-        if (row == roomDimensions.y - 1)
-            return; //BOSS ROOM GO BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+        //BOSS ROOM GO BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+        if (column == gridDimensions.x - 1)
+        {
+            //Debug.Log("Making boss room");
+            rooms[column, row].bossRoom = true;
+            return;
+        }
 
         int[] choices = new int[4];
         for (int i = 0; i < 4; i++)
@@ -137,6 +142,23 @@ public class MazeGenerator : MonoBehaviour
     //Generate room in maze with a layout that matches the struct
     private void GenRoomInMaze(int x, int y)
     {
+        Debug.Log("x=" + x + " y=" + y);
+        if(rooms[x, y].top)
+            Debug.Log("top");
+        if (rooms[x, y].right)
+            Debug.Log("right");
+        if (rooms[x, y].bottom)
+            Debug.Log("bottom");
+        if (rooms[x, y].left)
+            Debug.Log("left");
+
+        if (rooms[x, y].bossRoom)
+        {
+            Room boss = Instantiate(bossRoom);
+            boss.transform.position = new Vector2(x * roomDimensions.x, y * -roomDimensions.y);
+            return;
+        }
+
         List<Room> possibleLayouts = new List<Room>();
 
         foreach (Room roomType in roomTypes)
@@ -148,12 +170,17 @@ public class MazeGenerator : MonoBehaviour
         }
 
         if (possibleLayouts.Count == 0)
-            Debug.Log("NO ROOM MATCHING ROOM LAYOUT WAS FOUND");
+        {
+            //Debug.Log("NO ROOM MATCHING ROOM LAYOUT WAS FOUND");
+            Room def = Instantiate(defaultRoom);
+            def.transform.position = new Vector2(x * roomDimensions.x, y * -roomDimensions.y);
+            return;
+        }
 
         int rand = Random.Range(0, possibleLayouts.Count);
-        rooms[x, y].top = possibleLayouts[rand].top;
-        rooms[x, y].right = possibleLayouts[rand].right;
-        rooms[x, y].bottom = possibleLayouts[rand].bottom;
-        rooms[x, y].left = possibleLayouts[rand].left;
+
+        Room spawnedRoom = Instantiate(possibleLayouts[rand]);
+        spawnedRoom.transform.position = new Vector2(x * roomDimensions.x, y * -roomDimensions.y);
+        //Debug.Log("pog made a room");
     }
 }
