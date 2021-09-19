@@ -22,6 +22,7 @@ public class MazeGenerator : MonoBehaviour
     void Start()
     {
         rooms = new MazeRoom[gridDimensions.x, gridDimensions.y];
+        generateRandomMaze();
     }
 
     // Update is called once per frame
@@ -30,16 +31,11 @@ public class MazeGenerator : MonoBehaviour
         
     }
 
-    private void GenBaseMaze()
-    {
-
-    }
-
     /**
      * Generates a random maze by filling the entire grid with walls and then
      * calling clearPath from the entry point.
      */
-    public void generateRandomMaze()
+    private void generateRandomMaze()
     {
         for (int i = 0; i < roomDimensions.x; i++)
         {
