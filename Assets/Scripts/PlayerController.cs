@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
 
     private WeaponController weaponController;
+    private Animator animator;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         weaponController = GetComponent<WeaponController>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -34,10 +36,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey("d"))
         {
             rb2d.velocity = new Vector2(2, 0);
+
+            animator.SetBool("isWalking", true);
         }
         else if (Input.GetKey("a"))
         {
             rb2d.velocity = new Vector2(-2, 0);
+
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
         }
 
         if (Input.GetKeyDown("space") && isGrounded == true)

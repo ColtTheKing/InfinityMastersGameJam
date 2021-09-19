@@ -114,7 +114,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -133,9 +133,9 @@ TextureImporter:
       name: Character_Walk_1
       rect:
         serializedVersion: 2
-        x: 28
+        x: 32
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -154,9 +154,9 @@ TextureImporter:
       name: Character_Walk_2
       rect:
         serializedVersion: 2
-        x: 56
+        x: 64
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -175,9 +175,9 @@ TextureImporter:
       name: Character_Walk_3
       rect:
         serializedVersion: 2
-        x: 84
+        x: 96
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -196,9 +196,9 @@ TextureImporter:
       name: Character_Walk_4
       rect:
         serializedVersion: 2
-        x: 112
+        x: 128
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -217,9 +217,9 @@ TextureImporter:
       name: Character_Walk_5
       rect:
         serializedVersion: 2
-        x: 140
+        x: 160
         y: 0
-        width: 28
+        width: 32
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
