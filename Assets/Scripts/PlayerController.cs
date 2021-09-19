@@ -34,20 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Physics2D.Linecast(transform.position, groundCheck2.position, 1 << LayerMask.NameToLayer("Ground")))
-        {
-            //If the player just landed, tell the animator to leave the jump animation
-            if (!isGrounded)
-                animator.SetTrigger("land");
-
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics2D.Linecast(transform.position, groundCheck2.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
             //If the player just landed, tell the animator to leave the jump animation
             if (!isGrounded)
