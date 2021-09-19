@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2d;
     public Transform groundCheck;
-    public float checkRadius;
     public LayerMask groundMask;
     private Vector2 rightVector2;
     private Vector2 leftVector2;
@@ -17,15 +16,18 @@ public class PlayerController : MonoBehaviour
     public float fallMultipler = 2.5f;
     public float lowJumpMultiplier = 2f;
     public float speed;
+    public float maxBugFloat;
 
     private WeaponController weaponController;
     private Animator animator;
+    private SpriteRenderer playerSprite;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         weaponController = GetComponent<WeaponController>();
         animator = GetComponent<Animator>();
+        playerSprite = GetComponent<SpriteRenderer>();
 
         rightVector2.Set(4, 0);
         leftVector2.Set(-4, 0);
@@ -41,35 +43,36 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+        Debug.DrawLine(transform.position, groundCheck.position);
 
-        if (right == true)
+        if(right == true)
         {
-            rb2d.velocity = new Vector2(2, 0);
 
             animator.SetBool("isWalking", true);
 
-            rb2d.velocity = rightVector2.normalized * speed;
-            rightVector2.y = -1.5f;
+            rb2d.AddForce(rightVector2.normalized * speed);
+            rightVector2.y = rb2d.velocity.y;
             rb2d.velocity = rightVector2;
         }
-        
+
         if (left == true)
         {
-            rb2d.velocity = leftVector2.normalized * speed;
-            leftVector2.y = -1.5f;
+
+            rb2d.AddForce(leftVector2.normalized * speed);
+            leftVector2.y = rb2d.velocity.y;
             rb2d.velocity = leftVector2;
         }
-        
+
         if (!left && !right)
         {
             animator.SetBool("isWalking", false);
         }
-        
-        if(rb2d.velocity.y < 0)
+
+        if (rb2d.velocity.y < 0)
         {
             rb2d.gravityScale = fallMultipler;
         }
-        else if(rb2d.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && !isGrounded)
+        else if (rb2d.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && !isGrounded)
         {
             rb2d.gravityScale = lowJumpMultiplier;
         }
@@ -82,10 +85,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
+
         if (Input.GetKey(KeyCode.D))
         {
             right = true;
+            playerSprite.flipX = false;
         }
         else
         {
@@ -95,11 +99,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             left = true;
+            playerSprite.flipX = true;
         }
         else
         {
             left = false;
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            weaponController.WeaponAttack();
+            animator.SetTrigger("attack");
+        }
     }
 }
