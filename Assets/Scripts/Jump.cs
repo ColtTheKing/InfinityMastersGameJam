@@ -14,7 +14,7 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && playerController.isGrounded == true && playerController.left == false && playerController.right == false)
+        if (Input.GetKeyDown(KeyCode.Space) && playerController.isGrounded == true)
         {
             jumpRequest = true;
         }
