@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         public override void MoveEnemy()
         {
-            if (this.getXDistanceToPlayer()<RETREAT_THRESHOLD)//case one: BOOK IT!!!
+            if (this.getXDistanceToPlayer() < RETREAT_THRESHOLD)//case one: BOOK IT!!!
             {
                 if (isPlayerToLeft())
                 {
@@ -43,14 +43,14 @@ namespace Assets.Scripts
 
         public void Shoot()
         {
-            if { //dude in in range
+            //if { //dude in in range
                 //delay/tick for a few seconds? for fairness
                 //hitscan 
                 //summon light (i can do this)
                 //start reload timer once again
                 //AAAAAAAAAAAAAHhttps://event.hackhub.com/event/BCGJ2021
 
-            }
+            //}
         }
 
         public void Approach() { }
@@ -63,7 +63,7 @@ namespace Assets.Scripts
             this.attackDamage = 9;
             this.moveSpeed = 4;
             this.attackRadius = 5.0f;
-            this.healthPoints = 22;
+            currentHealth = 22;
             this.reloadTimer = 0;
         }
 

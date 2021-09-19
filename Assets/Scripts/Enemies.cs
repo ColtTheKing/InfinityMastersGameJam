@@ -13,7 +13,7 @@ abstract public class Enemies : MonoBehaviour
 
     private float timer;
 
-    private int currentHealth;
+    protected int currentHealth;
 
     public virtual void Awake()
     {
