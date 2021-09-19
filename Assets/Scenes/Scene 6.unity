@@ -720,8 +720,8 @@ GameObject:
   - component: {fileID: 513652201}
   - component: {fileID: 513652200}
   - component: {fileID: 513652199}
-  - component: {fileID: 513652203}
   - component: {fileID: 513652204}
+  - component: {fileID: 513652203}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -848,10 +848,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 513652198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbfd0b4d13b69742afebd6f1f0fc846, type: 3}
+  m_Script: {fileID: 11500000, guid: a75039593da23b64e8e27302b0bc22a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 0
   attackDamage: 4
   maxHealth: 8
   attackRadius: 0
