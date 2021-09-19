@@ -8,18 +8,23 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask groundMask;
+    private Vector2 rightVector2;
+    private Vector2 leftVector2;
 
-    private bool left;
-    private bool right;
+    [HideInInspector] public bool left;
+    [HideInInspector] public bool right;
     [HideInInspector] public bool isGrounded;
     public float fallMultipler = 2.5f;
     public float lowJumpMultiplier = 2f;
     public float speed;
+
     
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        rightVector2.Set(4, 0);
+        leftVector2.Set(-4, 0);
     }
 
     void FixedUpdate()
@@ -35,12 +40,16 @@ public class PlayerController : MonoBehaviour
 
         if (right == true)
         {
-            rb2d.velocity = new Vector2(4, 0);
+            rb2d.velocity = rightVector2.normalized * speed;
+            rightVector2.y = -1.5f;
+            rb2d.velocity = rightVector2;
         }
         
         if (left == true)
         {
-            rb2d.velocity = new Vector2(-4, 0);
+            rb2d.velocity = leftVector2.normalized * speed;
+            leftVector2.y = -1.5f;
+            rb2d.velocity = leftVector2;
         }
         
         if(rb2d.velocity.y < 0)
