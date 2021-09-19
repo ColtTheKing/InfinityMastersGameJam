@@ -23,9 +23,27 @@ public class WeaponController : MonoBehaviour
             timeUntilNextAttack -= Time.deltaTime;
     }
 
-    public void WeaponAttack()
+    public void WeaponAttack(bool primaryWeapon, Animator animator)
     {
-        
+        if (timeUntilNextAttack <= 0)
+        {
+            if (primaryWeapon)
+            {
+                AttackHitbox hitbox = GetComponentInChildren<AttackHitbox>();
+
+                hitbox.Activate();
+
+                animator.SetTrigger("attack");
+
+                timeUntilNextAttack = weapon1.cooldown;
+            }
+            else
+            {
+                //animator.SetTrigger("bomb");
+
+                timeUntilNextAttack = weapon2.cooldown;
+            }
+        }
     }
 }
 
