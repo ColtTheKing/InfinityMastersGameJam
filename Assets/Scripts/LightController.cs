@@ -8,6 +8,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightController : MonoBehaviour
 {
+    public float timer;
     private Light2D light;
     public double lightLevel; //current light level [0-100]\
     public double SECONDS_FOR_LIGHT_TICK; //seconds it takes for light level to decrease by 1
@@ -31,35 +32,40 @@ public class LightController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponentInChildren<Light2D>();
+        light = GetComponent<Light2D>();
         lightLevel = 100;
         SECONDS_FOR_LIGHT_TICK = 1;
 
         //light setup
-    LIGHT_BRIGHT_THRESHOLD = 75; //minimum light level to be considered "bright", "decent",
-    LIGHT_DECENT_THRESHOLD = 50; //"dim", and "dark" respectively. pitch is 0
-    LIGHT_DIM_THRESHOLD = 25;
-    LIGHT_DARK_THRESHOLD = 1;
+        timer = 0;
+        LIGHT_BRIGHT_THRESHOLD = 75; //minimum light level to be considered "bright", "decent",
+        LIGHT_DECENT_THRESHOLD = 50; //"dim", and "dark" respectively. pitch is 0
+        LIGHT_DIM_THRESHOLD = 25;
+        LIGHT_DARK_THRESHOLD = 1;
 
-    LIGHT_BRIGHT_INTENSITY = 1; //light level constants - 
-    LIGHT_BRIGHT_RADIUS = 1.4;
+        LIGHT_BRIGHT_INTENSITY = 1; //light level constants - 
+        LIGHT_BRIGHT_RADIUS = 1.4;
 
-    LIGHT_DECENT_INTENSITY = 0.8;
-    LIGHT_DECENT_RADIUS = 1;
+        LIGHT_DECENT_INTENSITY = 0.8;
+        LIGHT_DECENT_RADIUS = 1;
 
-    LIGHT_DIM_INTENSITY = 0.55;
-    LIGHT_DIM_RADIUS = 0.7;
+        LIGHT_DIM_INTENSITY = 0.55;
+        LIGHT_DIM_RADIUS = 0.7;
 
-    LIGHT_DARK_INTENSITY = 0.4;
-    LIGHT_DARK_RADIUS = 0.25;
+        LIGHT_DARK_INTENSITY = 0.4;
+        LIGHT_DARK_RADIUS = 0.25;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.deltaTime >= SECONDS_FOR_LIGHT_TICK) {
-            lightLevel = lightLevel - (Time.deltaTime/SECONDS_FOR_LIGHT_TICK);
+        timer = timer + 0.01f;
+        if (timer >= SECONDS_FOR_LIGHT_TICK)
+        {
+            if (lightLevel>0) lightLevel--;
             UpdateLightLevel();
+            Debug.Log("Light level ticked!");
+            timer = 0;
         }
     }
 
@@ -98,6 +104,19 @@ public class LightController : MonoBehaviour
             Debug.Log("Light is PITCH black! - 0");
             light.intensity = 0;
             light.pointLightInnerRadius = 0;
+        }
+
+    }
+
+
+    public void AddToLightLevel(double l) 
+    {
+        if ((l + lightLevel) >= 100)
+        {
+            lightLevel = 100;
+        } else
+        {
+            lightLevel = lightLevel + l;
         }
 
     }
