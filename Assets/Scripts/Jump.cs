@@ -9,10 +9,12 @@ public class Jump : MonoBehaviour
 
     bool jumpRequest;
 
+    public PlayerController playerController;
+
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && playerController.isGrounded == true)
         {
             jumpRequest = true;
         }
@@ -22,7 +24,6 @@ public class Jump : MonoBehaviour
         if (jumpRequest)
         {
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
-
             jumpRequest = false;
         }
     }

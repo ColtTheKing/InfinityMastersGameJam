@@ -11,26 +11,18 @@ public class PlayerController : MonoBehaviour
 
     private bool left;
     private bool right;
-    private bool isGrounded;
+    [HideInInspector] public bool isGrounded;
     public float fallMultipler = 2.5f;
     public float lowJumpMultiplier = 2f;
+    public float speed;
     
-
-<<<<<<< HEAD
-    void Awake()
-    {
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
-=======
-    private WeaponController weaponController;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        weaponController = GetComponent<WeaponController>();
->>>>>>> c44b6a2851cd2af90beec76676248194160e1b4a
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")))
         {
@@ -41,7 +33,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
-<<<<<<< HEAD
         if (right == true)
         {
             rb2d.velocity = new Vector2(4, 0);
@@ -53,25 +44,20 @@ public class PlayerController : MonoBehaviour
         }
         
         if(rb2d.velocity.y < 0)
-=======
-        //KEY HANDLING
-        if (Input.GetKey("d"))
->>>>>>> c44b6a2851cd2af90beec76676248194160e1b4a
         {
             rb2d.gravityScale = fallMultipler;
         }
-        else if(rb2d.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        else if(rb2d.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && !isGrounded)
         {
             rb2d.gravityScale = lowJumpMultiplier;
         }
         else
         {
-            rb2d.gravityScale = 3f;
+            rb2d.gravityScale = 1f;
         }
 
     }
 
-<<<<<<< HEAD
     private void Update()
     {
         
@@ -89,15 +75,9 @@ public class PlayerController : MonoBehaviour
             left = true;
         }
         else
-=======
-        if (Input.GetKeyDown("space") && isGrounded == true)
->>>>>>> c44b6a2851cd2af90beec76676248194160e1b4a
         {
             left = false;
         }
 
-        //MOUSE HANDLING
-        if (Input.GetMouseButtonDown(0))
-            ;
     }
 }
