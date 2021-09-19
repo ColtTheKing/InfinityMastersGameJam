@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1501148787}
+  groundCheck2: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 512
