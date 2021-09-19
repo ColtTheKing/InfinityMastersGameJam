@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime : Enemies
+public class SlimeEnemy : Enemies
 {
     private Animator animator;
 

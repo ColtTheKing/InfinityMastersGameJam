@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         }
         Debug.DrawLine(transform.position, groundCheck.position);
 
-        if(right == true)
+        if (right == true)
         {
 
             animator.SetBool("isWalking", true);
