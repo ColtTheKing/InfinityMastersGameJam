@@ -64,7 +64,7 @@ public class LightController : MonoBehaviour
         {
             if (lightLevel>0) lightLevel--;
             UpdateLightLevel();
-            Debug.Log("Light level ticked!");
+            //Debug.Log("Light level ticked!");
             timer = 0;
         }
     }
@@ -73,35 +73,35 @@ public class LightController : MonoBehaviour
     {
         if (lightLevel >= LIGHT_BRIGHT_THRESHOLD)
         {
-            Debug.Log("Light is bright - >=75");
+            //Debug.Log("Light is bright - >=75");
             light.intensity = (float) LIGHT_BRIGHT_INTENSITY;
             light.pointLightInnerRadius = (float) LIGHT_BRIGHT_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DECENT_THRESHOLD)
         {
-            Debug.Log("Light is DECENT - >=50");
+            //Debug.Log("Light is DECENT - >=50");
             light.intensity = (float) LIGHT_DECENT_INTENSITY;
             light.pointLightInnerRadius = (float) LIGHT_DECENT_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DIM_THRESHOLD)
         {
-            Debug.Log("Light is DIM - >=25");
+            //Debug.Log("Light is DIM - >=25");
             light.intensity = (float) LIGHT_DIM_INTENSITY;
             light.pointLightInnerRadius = (float) LIGHT_DIM_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DARK_THRESHOLD)
         {
-            Debug.Log("Light is DARK - >=1");
+            //Debug.Log("Light is DARK - >=1");
             light.intensity = (float) LIGHT_DARK_INTENSITY;
             light.pointLightInnerRadius = (float) LIGHT_DARK_RADIUS;
 
         }
         else
         {
-            Debug.Log("Light is PITCH black! - 0");
+            //Debug.Log("Light is PITCH black! - 0");
             light.intensity = 0;
             light.pointLightInnerRadius = 0;
         }
@@ -120,7 +120,4 @@ public class LightController : MonoBehaviour
         }
 
     }
-
-
-
 }
