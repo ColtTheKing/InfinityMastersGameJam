@@ -9,7 +9,11 @@ PhysicsManager:
   m_BounceThreshold: 2
   m_DefaultMaxDepenetrationVelocity: 10
   m_SleepThreshold: 0.005
+<<<<<<< HEAD
+  m_DefaultContactOffset: 0.000001
+=======
   m_DefaultContactOffset: 0.001
+>>>>>>> 969e9e900689b23949cf1957e28119603321a84f
   m_DefaultSolverIterations: 6
   m_DefaultSolverVelocityIterations: 1
   m_QueriesHitBackfaces: 0
