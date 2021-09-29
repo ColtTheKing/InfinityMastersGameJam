@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 6711833244850556298}
   - component: {fileID: 1123348677238807059}
   m_Layer: 9
-  m_Name: map_11
+  m_Name: right_top_down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

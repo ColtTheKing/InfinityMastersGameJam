@@ -29,6 +29,8 @@ public class Slime : Enemies
     // Update is called once per frame
     public override void Update()
     {
+        base.Update();
+
         Vector3 playerDirection = playerTransform.transform.position - slimeTransform.transform.position;
 
         if (playerDirection.x < 0)
@@ -51,8 +53,6 @@ public class Slime : Enemies
             rgb2D.AddForce(Vector2.up * slimeMoveSpeed, ForceMode2D.Impulse);
             animator.SetTrigger("jump");
         }
-
-        base.Update();
     }
 
     public override void AttackPlayer()

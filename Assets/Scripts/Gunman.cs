@@ -57,8 +57,10 @@ namespace Assets.Scripts
 
 
         // Use this for initialization
-        void Start()
+        public override void Start()
         {
+            base.Start();
+
             this.SECONDS_FOR_ENEMY_UPDATE = 1;
             this.attackDamage = 9;
             this.moveSpeed = 4;
@@ -68,7 +70,7 @@ namespace Assets.Scripts
         }
 
         // Update is called once per frame
-        void Update()
+        public override void Update()
         {
             base.Update();
         }

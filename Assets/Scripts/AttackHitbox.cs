@@ -9,13 +9,14 @@ public class AttackHitbox : MonoBehaviour
     public float hitboxDuration;
 
     private float hitboxTimer;
-    private bool hitboxActive, attackInProgress;
+    private bool attackInProgress;
+    private BoxCollider2D attackCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        //BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        //collider.enabled = false;
+        attackCollider = GetComponent<BoxCollider2D>();
+        attackCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -25,21 +26,16 @@ public class AttackHitbox : MonoBehaviour
         {
             hitboxTimer += Time.deltaTime;
             
-            if (!hitboxActive && hitboxTimer >= hitboxDelay)
+            if (!attackCollider.enabled && hitboxTimer >= hitboxDelay)
             {
                 //If the delay has passed, activate the hitbox
-                hitboxActive = true;
-                //BoxCollider2D collider = GetComponent<BoxCollider2D>();
-                //collider.enabled = true;
+                attackCollider.enabled = true;
 
             }
-            else if (hitboxActive && hitboxTimer > hitboxDelay + hitboxDuration)
+            else if (attackCollider.enabled && hitboxTimer > hitboxDelay + hitboxDuration)
             {
                 //If the hitbox duration has passed, deactivate the hitbox and stop the attack
-                hitboxActive = false;
-                //BoxCollider2D collider = GetComponent<BoxCollider2D>();
-                //collider.enabled = false;
-
+                attackCollider.enabled = false;
                 attackInProgress = false;
             }
         }
@@ -51,12 +47,9 @@ public class AttackHitbox : MonoBehaviour
         hitboxTimer = 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D enemyCollider)
     {
-        if (!hitboxActive)
-            return;
-
-        Enemies enemyHit = collision.otherCollider.gameObject.GetComponent<Enemies>();
+        Enemies enemyHit = enemyCollider.gameObject.GetComponent<Enemies>();
 
         if (enemyHit)
         {

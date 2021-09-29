@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 3631465390151330673}
   - component: {fileID: 9110764846668018901}
   m_Layer: 9
-  m_Name: map_12
+  m_Name: left_right_top_down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

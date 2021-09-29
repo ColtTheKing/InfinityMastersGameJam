@@ -17,7 +17,6 @@ public class MazeGenerator : MonoBehaviour
     public Vector2Int gridDimensions;
     public List<Room> roomTypes;
     public Room bossRoom;
-    public Room defaultRoom;
 
     private MazeRoom[,] rooms;
 
@@ -54,7 +53,7 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        clearPath(0, 1);
+        clearPath(0, 0);
 
         for (int i = 0; i < gridDimensions.x; i++)
         {
@@ -82,25 +81,25 @@ public class MazeGenerator : MonoBehaviour
 
         rooms[column, row].visited = true;
 
-        if (column > 1)
+        if (column > 0)
         {
             rooms[column - 1, row].numEntrances++;
-            rooms[column - 1, row].left = true;
+            rooms[column - 1, row].right = true;
         }
-        if (row > 1)
+        if (row > 0)
         {
             rooms[column, row - 1].numEntrances++;
-            rooms[column, row - 1].top = true;
+            rooms[column, row - 1].bottom = true;
         }
         if (column < gridDimensions.x - 1)
         {
             rooms[column + 1, row].numEntrances++;
-            rooms[column + 1, row].right = true;
+            rooms[column + 1, row].left = true;
         }
         if (row < gridDimensions.y - 1)
         {
             rooms[column, row + 1].numEntrances++;
-            rooms[column, row + 1].bottom = true;
+            rooms[column, row + 1].top = true;
         }
 
         //BOSS ROOM GO BRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
@@ -142,15 +141,19 @@ public class MazeGenerator : MonoBehaviour
     //Generate room in maze with a layout that matches the struct
     private void GenRoomInMaze(int x, int y)
     {
-        Debug.Log("x=" + x + " y=" + y);
-        if(rooms[x, y].top)
-            Debug.Log("top");
-        if (rooms[x, y].right)
-            Debug.Log("right");
-        if (rooms[x, y].bottom)
-            Debug.Log("bottom");
-        if (rooms[x, y].left)
-            Debug.Log("left");
+        //Could have a wall "room" here to fill it in
+        if (!rooms[x, y].visited)
+            return;
+
+        //Debug.Log("x=" + x + " y=" + y);
+        //if(rooms[x, y].top)
+        //    Debug.Log("top");
+        //if (rooms[x, y].right)
+        //    Debug.Log("right");
+        //if (rooms[x, y].bottom)
+        //    Debug.Log("bottom");
+        //if (rooms[x, y].left)
+        //    Debug.Log("left");
 
         if (rooms[x, y].bossRoom)
         {
@@ -171,9 +174,7 @@ public class MazeGenerator : MonoBehaviour
 
         if (possibleLayouts.Count == 0)
         {
-            //Debug.Log("NO ROOM MATCHING ROOM LAYOUT WAS FOUND");
-            Room def = Instantiate(defaultRoom);
-            def.transform.position = new Vector2(x * roomDimensions.x, y * -roomDimensions.y);
+            Debug.Log("NO ROOM MATCHING ROOM LAYOUT WAS FOUND");
             return;
         }
 

@@ -8,52 +8,33 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightController : MonoBehaviour
 {
-    public float timer;
-    private Light2D light;
-    public double lightLevel; //current light level [0-100]\
-    public double SECONDS_FOR_LIGHT_TICK; //seconds it takes for light level to decrease by 1
+    public double LIGHT_LEVEL_START = 100;
+    public double SECONDS_FOR_LIGHT_TICK = 1; //seconds it takes for light level to decrease by 1
 
-    public double LIGHT_BRIGHT_THRESHOLD; //minimum light level to be considered "bright", "decent",
-    public double LIGHT_DECENT_THRESHOLD; //"dim", and "dark" respectively. pitch is 0
-    public double LIGHT_DIM_THRESHOLD;
-    public double LIGHT_DARK_THRESHOLD;
+    public double LIGHT_BRIGHT_THRESHOLD = 75; //minimum light level to be considered "bright", "decent",
+    public double LIGHT_DECENT_THRESHOLD = 50; //"dim", and "dark" respectively. pitch is 0
+    public double LIGHT_DIM_THRESHOLD = 25;
+    public double LIGHT_DARK_THRESHOLD = 1;
 
-    public double LIGHT_BRIGHT_INTENSITY; //light level constants - 
-    public double LIGHT_BRIGHT_RADIUS;
-    public double LIGHT_DECENT_INTENSITY;
-    public double LIGHT_DECENT_RADIUS;
-    public double LIGHT_DIM_INTENSITY;
-    public double LIGHT_DIM_RADIUS;
-    public double LIGHT_DARK_INTENSITY;
-    public double LIGHT_DARK_RADIUS;
+    public double LIGHT_BRIGHT_INTENSITY = 1; //light level constants - 
+    public double LIGHT_BRIGHT_RADIUS = 1.4;
+    public double LIGHT_DECENT_INTENSITY = 0.8;
+    public double LIGHT_DECENT_RADIUS = 1;
+    public double LIGHT_DIM_INTENSITY = 0.55;
+    public double LIGHT_DIM_RADIUS = 0.7;
+    public double LIGHT_DARK_INTENSITY = 0.4;
+    public double LIGHT_DARK_RADIUS = 0.25;
 
-
+    private Light2D myLight;
+    private float timer;
+    private double lightLevel; //current light level [0-100]
 
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponent<Light2D>();
-        lightLevel = 100;
-        SECONDS_FOR_LIGHT_TICK = 1;
-
-        //light setup
+        myLight = GetComponent<Light2D>();
         timer = 0;
-        LIGHT_BRIGHT_THRESHOLD = 75; //minimum light level to be considered "bright", "decent",
-        LIGHT_DECENT_THRESHOLD = 50; //"dim", and "dark" respectively. pitch is 0
-        LIGHT_DIM_THRESHOLD = 25;
-        LIGHT_DARK_THRESHOLD = 1;
-
-        LIGHT_BRIGHT_INTENSITY = 1; //light level constants - 
-        LIGHT_BRIGHT_RADIUS = 1.4;
-
-        LIGHT_DECENT_INTENSITY = 0.8;
-        LIGHT_DECENT_RADIUS = 1;
-
-        LIGHT_DIM_INTENSITY = 0.55;
-        LIGHT_DIM_RADIUS = 0.7;
-
-        LIGHT_DARK_INTENSITY = 0.4;
-        LIGHT_DARK_RADIUS = 0.25;
+        lightLevel = LIGHT_LEVEL_START;
     }
 
     // Update is called once per frame
@@ -74,36 +55,36 @@ public class LightController : MonoBehaviour
         if (lightLevel >= LIGHT_BRIGHT_THRESHOLD)
         {
             //Debug.Log("Light is bright - >=75");
-            light.intensity = (float) LIGHT_BRIGHT_INTENSITY;
-            light.pointLightInnerRadius = (float) LIGHT_BRIGHT_RADIUS;
+            myLight.intensity = (float) LIGHT_BRIGHT_INTENSITY;
+            myLight.pointLightInnerRadius = (float) LIGHT_BRIGHT_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DECENT_THRESHOLD)
         {
             //Debug.Log("Light is DECENT - >=50");
-            light.intensity = (float) LIGHT_DECENT_INTENSITY;
-            light.pointLightInnerRadius = (float) LIGHT_DECENT_RADIUS;
+            myLight.intensity = (float) LIGHT_DECENT_INTENSITY;
+            myLight.pointLightInnerRadius = (float) LIGHT_DECENT_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DIM_THRESHOLD)
         {
             //Debug.Log("Light is DIM - >=25");
-            light.intensity = (float) LIGHT_DIM_INTENSITY;
-            light.pointLightInnerRadius = (float) LIGHT_DIM_RADIUS;
+            myLight.intensity = (float) LIGHT_DIM_INTENSITY;
+            myLight.pointLightInnerRadius = (float) LIGHT_DIM_RADIUS;
 
         }
         else if (lightLevel >= LIGHT_DARK_THRESHOLD)
         {
             //Debug.Log("Light is DARK - >=1");
-            light.intensity = (float) LIGHT_DARK_INTENSITY;
-            light.pointLightInnerRadius = (float) LIGHT_DARK_RADIUS;
+            myLight.intensity = (float) LIGHT_DARK_INTENSITY;
+            myLight.pointLightInnerRadius = (float) LIGHT_DARK_RADIUS;
 
         }
         else
         {
             //Debug.Log("Light is PITCH black! - 0");
-            light.intensity = 0;
-            light.pointLightInnerRadius = 0;
+            myLight.intensity = 0;
+            myLight.pointLightInnerRadius = 0;
         }
 
     }

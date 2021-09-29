@@ -34,8 +34,6 @@ abstract public class Enemies : MonoBehaviour
         {
             MoveEnemy();
             AttackPlayer();
-            TakeDamage(0);
-            Debug.Log("Enemy ticked!");
             timer = 0;
         }
     }
@@ -74,13 +72,13 @@ abstract public class Enemies : MonoBehaviour
 
     abstract public void AttackPlayer();
 
-
     public void TakeDamage(int dmg) //call this after player hits enemy
     {
         if ((currentHealth - dmg) > 0)
         {
             currentHealth -= dmg;
             //TODO play some sort of sound or anim to signify damage taken
+            Debug.Log("health = " + currentHealth);
         }
         else
         {
@@ -127,11 +125,12 @@ abstract public class Enemies : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        PlayerController playerHit = collision.otherCollider.gameObject.GetComponent<PlayerController>();
+        PlayerController playerHit = collision.collider.gameObject.GetComponent<PlayerController>();
 
         if (playerHit)
         {
-            //deal damage to player
+            //try to damage the player
+            playerHit.TakeDamage(attackDamage);
         }
     }
 }
